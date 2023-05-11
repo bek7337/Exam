@@ -1,0 +1,128 @@
+1)https://www.hackerrank.com/challenges/average-population-of-each-continent/problem?isFullScreen=true
+
+    Javobi:
+            select con.Continent , floor(sum(cit.population)/count(cit.population)) from city cit join country con on cit.countrycode = con.code group by con.Continent;
+
+
+2)https://leetcode.com/problems/triangle-judgement/?envType=study-plan-v2&id=top-sql-50
+
+
+    Javobi:
+            select x,y,z,(case when x+y>z and y+z>x and x+z>y then 'Yes' else 'No' end)triangle from Triangle;
+
+
+3)https://www.hackerrank.com/challenges/challenges/problem?isFullScreen=true
+
+
+    Javobi:
+            SELECT c.hacker_id, h.name, count(c.challenge_id) AS cnt
+            FROM Hackers AS h JOIN Challenges AS c ON h.hacker_id = c.hacker_id
+            GROUP BY c.hacker_id, h.name
+            HAVING cnt = (SELECT count(c1.challenge_id) FROM Challenges AS c1 GROUP BY c1.hacker_id
+                          ORDER BY count(*) desc limit 1) or
+            cnt NOT IN (SELECT count(c2.challenge_id) FROM Challenges AS c2 GROUP BY c2.hacker_id
+                        HAVING c2.hacker_id <> c.hacker_id)
+            ORDER BY cnt DESC, c.hacker_id;
+
+
+
+4)https://leetcode.com/problems/minimum-amount-of-time-to-fill-cups/
+
+
+    Javobi:
+            class Solution:
+            def fillCups(self, amount: List[int]) -> int:
+                amount.sort()
+                if amount[2]>=amount[0]+amount[1]:
+                    return amount[2]
+                return (sum(amount) + 1) // 2
+
+
+5) 2 - schema
+
+
+    Javobi:
+    create table OrderItem(
+    OrderId integer not null,
+    FilmId integer not null,
+    FormatId integer not null,
+    PriceTimeOfOrder timestamp,
+    foreign key (OrderId)
+                      references Order(Id),
+    foreign key (FilmId)
+                      references FilmFormat(FilmId),
+    foreign key (FormatId)
+                      references FilmFormat(FormatId)
+    )
+
+    create table FilmFormat(
+        FilmId integer not null,
+        FormatId integer not null,
+        Price integer default 1,
+        foreign key (FilmId)
+                           references Film(Id),
+    )
+
+    create table Film(
+        Id INTEGER FOREIGN KEY,
+        Title,
+        Description,
+        Year integer default 1,,
+        Rating integer default 1,
+    )
+
+    create table FilmActor(
+        FilmId integer not null,
+        ActorId integer not null
+    )
+
+    create table Genre(
+        Id INTEGER FOREIGN KEY,
+        Name varchar(255),
+    )
+
+    create table FilmGenre(
+        FilmId integer not null,
+        GenreId integer not null
+    )
+
+    create table Actor(
+        Id INTEGER FOREIGN KEY,
+        Name varchar(255),
+    )
+
+    create table Order(
+        Id INTEGER FOREIGN KEY,
+        PaymentTypeId integer not null,
+    )
+
+    create table OrderDeliveryAddress(
+        OrderId integer not null,
+        UserId integer not null,
+        AddressId integer not null,
+    )
+
+    create table User(
+        Id INTEGER FOREIGN KEY,
+        Name varchar(255),
+    )
+
+    create table PaymentType(
+        Id INTEGER FOREIGN KEY,
+        Name varchar(255),
+    )
+
+    create table OrderBillingAddress(
+        OrderId integer not null,
+        UserId integer not null,
+        AddressId integer not null,
+    )
+
+    create table UserAdress(
+        UserId integer not null,
+        AddressId integer not null,
+        Address varchar(255),
+    )
+
+
+
